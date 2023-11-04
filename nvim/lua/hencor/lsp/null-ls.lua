@@ -65,6 +65,15 @@ local sources = {
  code_actions.cspell.with({ config = config_cspell}),
 }
 
+local lsp_formatting = function(bufnr)
+  vim.lsp.buf.format({
+    filter = function(client)
+      return client.name == "null-ls"
+    end,
+    bufnr = bufnr,
+  })
+end
+
 null_ls.setup({
 	sources = sources,
     on_attach = function(client, bufnr)
@@ -76,7 +85,7 @@ null_ls.setup({
             callback = function()
                 -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
                 -- vim.lsp.buf.formatting_sync()
-                vim.lsp.buf.format({ bufnr = bufnr })
+                lsp_formatting(bufnr)
             end,
         })
     end
@@ -107,3 +116,11 @@ vim.api.nvim_create_user_command("NullLsToggle", function()
     null_ls.toggle(selected)
   end)
 end, {})
+
+vim.api.nvim_create_user_command(
+  'DisableLspFormatting',
+  function()
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = 0 })
+  end,
+  { nargs = 0 }
+)

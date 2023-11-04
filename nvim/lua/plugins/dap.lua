@@ -11,7 +11,7 @@ return {
   },
   keys = { { "<leader>d", desc = "Open Debug menu" } },
   config = function()
-    require "alpha.dap"
+    require "hencor.dap"
     local ok_telescope, telescope = pcall(require, "telescope")
     if ok_telescope then
       telescope.load_extension "dap"
