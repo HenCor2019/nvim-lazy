@@ -7,9 +7,8 @@ return {
     "nvim-treesitter/nvim-treesitter",
     "antoinemadec/FixCursorHold.nvim",
     "nvim-neotest/neotest-go",
-    "rouge8/neotest-rust",
+    "haydenmeade/neotest-jest",
     "nvim-neotest/neotest-plenary",
-    "nvim-neotest/neotest-vim-test",
     "anuvyklack/hydra.nvim",
   },
   config = function()
