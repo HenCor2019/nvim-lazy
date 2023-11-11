@@ -57,6 +57,7 @@ local diagnostics = null_ls.builtins.diagnostics
 
 local sources = {
  formatting.prettierd,
+ diagnostics.eslint_d,
  formatting.gofmt,
  diagnostics.cspell.with({ config = config_cspell}),
  diagnostics.golangci_lint,
@@ -92,12 +93,12 @@ null_ls.setup({
   end,
 })
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	underline = true,
-	update_in_insert = false,
-	virtual_text = { spacing = 2, prefix = "●" },
-	severity_sort = true,
-})
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+-- 	underline = true,
+-- 	update_in_insert = false,
+-- 	virtual_text = { spacing = 2, prefix = "●" },
+-- 	severity_sort = true,
+-- })
 
 vim.keymap.set({ "n", "v" }, "<leader>vca", vim.lsp.buf.code_action, {desc = "LSP (null ls) Code actions"})
 vim.keymap.set("n", "<leader>vf", function()

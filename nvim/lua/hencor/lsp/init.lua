@@ -30,7 +30,7 @@ return {
     end
 
     -- TODO: implement null ls with options
-    require "hencor.lsp.null-ls"
+    -- require "hencor.lsp.null-ls"
 
     local servers = {}
     for server, options in pairs(ops.servers) do
