@@ -4,7 +4,7 @@ local dap, dapui, hydra = require "dap", require "dapui", require "hydra"
 require("nvim-dap-virtual-text").setup {}
 
 for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("lua/hencor/dap/configs/*.lua", true)) do
-  loadfile(ft_path)()
+    loadfile(ft_path)()
 end
 
 -- Signs
@@ -16,32 +16,32 @@ vim.fn.sign_define("DapLogPoint", { text = "💬", texthl = "", linehl = "", num
 
 -- UI structure
 dapui.setup {
-  icons = { expanded = "▾", collapsed = "▸" },
-  layouts = {
-    {
-      elements = {
-        "scopes",
-        "breakpoints",
-        "stacks",
-        "watches",
-      },
-      size = 80,
-      position = "right",
+    icons = { expanded = "▾", collapsed = "▸" },
+    layouts = {
+        {
+            elements = {
+                "scopes",
+                "breakpoints",
+                "stacks",
+                "watches",
+            },
+            size = 80,
+            position = "right",
+        },
+        {
+            elements = {
+                "repl",
+                "console",
+            },
+            size = 10,
+            position = "bottom",
+        },
     },
-    {
-      elements = {
-        "repl",
-        "console",
-      },
-      size = 10,
-      position = "bottom",
-    },
-  },
 }
 
 -- Events Listeners
 dap.listeners.after.event_initialized["dapui_config"] = function()
-  dapui.open {}
+    dapui.open {}
 end
 
 local hint = [[
@@ -56,53 +56,53 @@ local hint = [[
 ]]
 
 hydra {
-  name = "dap",
-  hint = hint,
-  mode = "n",
-  config = {
-    color = "blue",
-    invoke_on_body = true,
-    hint = {
-      border = "rounded",
-      position = "bottom",
+    name = "dap",
+    hint = hint,
+    mode = "n",
+    config = {
+        color = "blue",
+        invoke_on_body = true,
+        hint = {
+            border = "rounded",
+            position = "bottom",
+        },
     },
-  },
-  body = "<leader>d",
-  heads = {
-    { "d", dap.continue },
-    { "bp", dap.toggle_breakpoint },
-    { "l", dap.step_into },
-    { "j", dap.step_over },
-    { "k", dap.step_out },
-    { "h", dapui.eval },
-    { "c", dap.run_to_cursor },
-    {
-      "bc",
-      function()
-        vim.ui.input({ prompt = "Condition: " }, function(condition)
-          dap.set_breakpoint(condition)
-        end)
-      end,
-    },
-    {
-      "?",
-      function()
-        vim.ui.input({ prompt = "Log: " }, function(log)
-          dap.set_breakpoint(nil, nil, log)
-        end)
-      end,
-    },
-    {
-      "x",
-      function()
-        dap.terminate()
-        dapui.close {}
-        dap.clear_breakpoints()
-      end,
-    },
+    body = "<leader>d",
+    heads = {
+        { "d",  dap.continue },
+        { "bp", dap.toggle_breakpoint },
+        { "l",  dap.step_into },
+        { "j",  dap.step_over },
+        { "k",  dap.step_out },
+        { "h",  dapui.eval },
+        { "c",  dap.run_to_cursor },
+        {
+            "bc",
+            function()
+                vim.ui.input({ prompt = "Condition: " }, function(condition)
+                    dap.set_breakpoint(condition)
+                end)
+            end,
+        },
+        {
+            "?",
+            function()
+                vim.ui.input({ prompt = "Log: " }, function(log)
+                    dap.set_breakpoint(nil, nil, log)
+                end)
+            end,
+        },
+        {
+            "x",
+            function()
+                dap.terminate()
+                dapui.close {}
+                dap.clear_breakpoints()
+            end,
+        },
 
-    { "<Esc>", nil, { exit = true } },
-  },
+        { "<Esc>", nil, { exit = true } },
+    },
 }
 --debugging
 -- --
@@ -206,28 +206,29 @@ hydra {
 -- }
 --
 -- dap.adapters.node2 = {
---   type = 'executable',
---   command = 'node',
---   args = {os.getenv('HOME') .. '/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js'},
+--     type = 'executable',
+--     command = 'node',
+--     args = { '/home/henryc/.local/share/nvim/mason/packages/js-debug-adapter/js-debug-adapter' },
 -- }
+--
 -- dap.configurations.javascript = {
---   {
---     name = 'Launch',
---     type = 'node2',
---     request = 'launch',
---     program = '${file}',
---     cwd = vim.fn.getcwd(),
---     sourceMaps = true,
---     protocol = 'inspector',
---     console = 'integratedTerminal',
---   },
---   {
---     -- For this to work you need to make sure the node process is started with the `--inspect` flag.
---     name = 'Attach to process',
---     type = 'node2',
---     request = 'attach',
---     processId = require'dap.utils'.pick_process,
---   },
+--     {
+--         name = 'Launch',
+--         type = 'node2',
+--         request = 'launch',
+--         program = '${file}',
+--         cwd = vim.fn.getcwd(),
+--         sourceMaps = true,
+--         protocol = 'inspector',
+--         console = 'integratedTerminal',
+--     },
+--     {
+--         -- For this to work you need to make sure the node process is started with the `--inspect` flag.
+--         name = 'Attach to process',
+--         type = 'node2',
+--         request = 'attach',
+--         processId = require 'dap.utils'.pick_process,
+--     },
 -- }
 --
 -- dap.configurations.typescript = {
@@ -238,8 +239,6 @@ hydra {
 --         cwd = vim.loop.cwd(),
 --         args = { "${workspaceFolder}/src/main.ts" },
 --         runtimeArgs = { "--nolazy", "-r", "ts-node/register" },
---         -- args = {"--inspect", "${file}"},
---         -- runtimeArgs = { "-r", "ts-node/register" },
 --         runtimeExecutable = "node",
 --         sourceMaps = true,
 --         port = 9229,
@@ -251,9 +250,9 @@ hydra {
 --         type = "node2",
 --         request = "launch",
 --         cwd = vim.loop.cwd(),
---         runtimeArgs = {"--inspect-brk", "${workspaceFolder}/node_modules/.bin/jest"},
+--         runtimeArgs = { "--inspect-brk", "${workspaceFolder}/node_modules/.bin/jest" },
 --         runtimeExecutable = "node",
---         args = {"${file}", "--runInBand", "--coverage", "false"},
+--         args = { "${file}", "--runInBand", "--coverage", "false" },
 --         sourceMaps = true,
 --         port = 9229,
 --         skipFiles = { "<node_internals>/**", "node_modules/**" },
